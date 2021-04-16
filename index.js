@@ -51,6 +51,7 @@ const ScrollableTabView = createReactClass({
     scrollWithoutAnimation: PropTypes.bool,
     locked: PropTypes.bool,
     prerenderingSiblingsNumber: PropTypes.number,
+    renderSceneOverlay: PropTypes.any
   },
 
   getDefaultProps() {
@@ -63,7 +64,7 @@ const ScrollableTabView = createReactClass({
       contentProps: {},
       scrollWithoutAnimation: false,
       locked: false,
-      prerenderingSiblingsNumber: 0,
+      prerenderingSiblingsNumber: 0
     };
   },
 
@@ -398,7 +399,10 @@ const ScrollableTabView = createReactClass({
 
     return <View style={[styles.container, this.props.style, ]} onLayout={this._handleLayout}>
       {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
-      {this.renderScrollableContent()}
+      <View style={{ flex: 1 }}>
+        {this.renderScrollableContent()}
+        {this.props.renderSceneOverlay?.()}
+      </View>
       {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
     </View>;
   },
